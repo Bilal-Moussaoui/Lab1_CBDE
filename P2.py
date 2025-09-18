@@ -1,4 +1,4 @@
-import time, psycopg2
+import time, psycopg2, tqdm
 
 postgres_connection = psycopg2.connect(
     host="localhost",
@@ -19,41 +19,49 @@ def run_top2(metric_func, qid):
     return neighbors, dt
 
 results = []
-for qid in chunk_ids:
+for qid in tqdm.tqdm(chunk_ids):
     # obtener el texto del query_id
     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (qid,))
     chunk_text = cursor.fetchone()[0]
 
-    eucl, t_eucl = run_top2('top2_euclidean', qid)
-    manh, t_manh = run_top2('top2_manhattan', qid)
+    euclidean_neighbors, t_euclidean = run_top2('top2_euclidean', qid)
+    manhattan_neighbors, t_manhattan = run_top2('top2_manhattan', qid)
 
     results.append({
         "chunk_id": qid,
         "chunk": chunk_text,
-        "euclidean": eucl,  "t_euclidean": t_eucl,
-        "manhattan": manh,  "t_manhattan": t_manh
+        "euclidean": euclidean_neighbors,  "t_euclidean": t_euclidean,
+        "manhattan": manhattan_neighbors,  "t_manhattan": t_manhattan
     })
 
-for r in results:
-    print(f"\nQuery {r['chunk_id']}: {r['chunk']}...")
+# # Primera forma de mostrar los resultados
+# for r in results:
+#     print(f"\nQuery {r['chunk_id']}: {r['chunk']}")
     
-    print("  Euclidean:", r["euclidean"], f"({r['t_euclidean']:.4f}s)")
-    cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["euclidean"][0][0],))
-    eucl_first_chunk = cursor.fetchone()[0]
-    cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["euclidean"][1][0],))
-    eucl_second_chunk = cursor.fetchone()[0]
-    print("    First neighbor:", eucl_first_chunk)
-    print("    Second neighbor:", eucl_second_chunk)
+#     print("  Euclidean:", r["euclidean"], f"({r['t_euclidean']:.4f}s)")
+#     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["euclidean"][0][0],))
+#     eucl_first_chunk = cursor.fetchone()[0]
+#     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["euclidean"][1][0],))
+#     eucl_second_chunk = cursor.fetchone()[0]
+#     print("    First neighbor:", eucl_first_chunk)
+#     print("    Second neighbor:", eucl_second_chunk)
 
+#     print(" <-------------------------------->")
+
+#     print("  Manhattan:", r["manhattan"], f"({r['t_manhattan']:.4f}s)")
+#     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["manhattan"][0][0],))
+#     manh_first_chunk = cursor.fetchone()[0]
+#     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["manhattan"][1][0],))
+#     manh_second_chunk = cursor.fetchone()[0]
+#     print("    First neighbor:", manh_first_chunk)
+#     print("    Second neighbor:", manh_second_chunk)
+
+# Segunda forma de mostrar los resultados
+for r in results:
+    print(f"\nQuery {r['chunk_id']}:")
+    print("Euclidean: ", r["euclidean"], f"({r['t_euclidean']:.4f}s)")
+    print("Manhattan: ", r["manhattan"], f"({r['t_manhattan']:.4f}s)")
     print(" <-------------------------------->")
-
-    print("  Manhattan:", r["manhattan"], f"({r['t_manhattan']:.4f}s)")
-    cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["manhattan"][0][0],))
-    manh_first_chunk = cursor.fetchone()[0]
-    cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["manhattan"][1][0],))
-    manh_second_chunk = cursor.fetchone()[0]
-    print("    First neighbor:", manh_first_chunk)
-    print("    Second neighbor:", manh_second_chunk)
 
 cursor.close()
 postgres_connection.close()

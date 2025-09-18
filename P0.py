@@ -38,7 +38,7 @@ execute_values(cursor,
 postgres_connection.commit()
 t1 = time.perf_counter()
 
-print(f"Insertadas {len(chunks)} filas en {t1 - t0:.3f} segundos")
+print(f"Insertadas {len(chunks)} filas en {t1 - t0:.4f} segundos")
 
 # Quinto paso: Cerrar la conexión con la base de datos.
 cursor.close()

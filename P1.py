@@ -25,8 +25,11 @@ CREATE TABLE IF NOT EXISTS embeddings_table (
 postgres_connection.commit()
 
 # Cargar el corpus de texto y obtener los embeddings de cada chunk.
+t0 = time.time()
 cursor.execute("SELECT id, chunk FROM chunks_table ORDER BY id")
 chunks = cursor.fetchall()          # [(id, chunk), ...]
+t1 = time.time()
+print(f"Devueltos {len(chunks)} chunks en {t1 - t0:.4f} segundos")
 
 
 # Carga del modelo de embeddings de Hugging Face.
@@ -57,7 +60,7 @@ execute_values(
 )
 postgres_connection.commit()
 end_time = time.time()
-print(f"Insertados {len(embeddings_tuples)} embeddings en {end_time - start_time} segundos")
+print(f"Insertados {len(embeddings_tuples)} embeddings en {end_time - start_time:.4f} segundos")
 
 
 # Cerrar la conexión con la base de datos.
