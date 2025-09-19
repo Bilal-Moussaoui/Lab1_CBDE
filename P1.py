@@ -18,7 +18,7 @@ postgres_connection = psycopg2.connect(
 cursor = postgres_connection.cursor()
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS embeddings_table (
-  id INTEGER PRIMARY KEY REFERENCES chunks_table(id),
+  id SERIAL PRIMARY KEY REFERENCES chunks_table(id),
   embedding REAL[] NOT NULL
 );
 """)

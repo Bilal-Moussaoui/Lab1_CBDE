@@ -1,4 +1,6 @@
-import time, psycopg2, tqdm
+import time, psycopg2
+from tqdm import tqdm
+from sentence_transformers import SentenceTransformer
 
 postgres_connection = psycopg2.connect(
     host="localhost",
@@ -9,26 +11,44 @@ postgres_connection = psycopg2.connect(
 )
 cursor = postgres_connection.cursor()
 
-chunk_ids = [11,12,13,14,15,16,17,18,19,20]
+# Inicializar el modelo de embeddings
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
-def run_top2(metric_func, qid):
+# Textos de chunks para generar embeddings
+# NOTA: Los IDs se obtienen dinámicamente desde la base de datos (línea 44)
+chunk_texts = [
+    "i tell them .",
+    "his skin was the smooth creamy tan of immortals who go into the sun often in order to pass for human , and it made his eyes appear wondrously bright and beautiful .",
+    "only her .",
+    "`` what are you looking for ? ''",
+    "there were a few travelers eating their supper , but most were locals sitting for a drink .",
+    "you have five minutes . ''",
+    "is this where you live ?",
+    "he stared at dog .",
+    "the three strands of barbed wire on top of the six-foot-tall , chain link fence around the plant even pointed inward .",
+    "i was on my own after that . '"
+]
+
+def run_top2(metric_func, query_embedding, query_id):
     t0 = time.perf_counter()
-    cursor.execute(f"SELECT neighbor_id, distance FROM {metric_func}(%s);", (qid,))
+    cursor.execute(f"SELECT neighbor_id, distance FROM {metric_func}(%s, %s);", (query_embedding, query_id))
     neighbors = cursor.fetchall()  # [(neighbor_id, distance), (neighbor_id, distance)]
     dt = time.perf_counter() - t0
     return neighbors, dt
 
 results = []
-for qid in tqdm.tqdm(chunk_ids):
-    # obtener el texto del query_id
-    cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (qid,))
-    chunk_text = cursor.fetchone()[0]
 
-    euclidean_neighbors, t_euclidean = run_top2('top2_euclidean', qid)
-    manhattan_neighbors, t_manhattan = run_top2('top2_manhattan', qid)
+for i, chunk_text in enumerate(tqdm(chunk_texts)):
+    # Generar embedding del texto del chunk
+    cursor.execute("SELECT id FROM chunks_table WHERE chunk = %s;", (chunk_text,))
+    query_id = str(cursor.fetchone()[0])
+    query_embedding = model.encode(chunk_text).tolist()
+    
+    euclidean_neighbors, t_euclidean = run_top2('top2_euclidean', query_embedding, query_id)
+    manhattan_neighbors, t_manhattan = run_top2('top2_manhattan', query_embedding, query_id)
 
     results.append({
-        "chunk_id": qid,
+        "chunk_id": query_id,
         "chunk": chunk_text,
         "euclidean": euclidean_neighbors,  "t_euclidean": t_euclidean,
         "manhattan": manhattan_neighbors,  "t_manhattan": t_manhattan
@@ -46,8 +66,6 @@ for qid in tqdm.tqdm(chunk_ids):
 #     print("    First neighbor:", eucl_first_chunk)
 #     print("    Second neighbor:", eucl_second_chunk)
 
-#     print(" <-------------------------------->")
-
 #     print("  Manhattan:", r["manhattan"], f"({r['t_manhattan']:.4f}s)")
 #     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["manhattan"][0][0],))
 #     manh_first_chunk = cursor.fetchone()[0]
@@ -61,7 +79,6 @@ for r in results:
     print(f"\nQuery {r['chunk_id']}:")
     print("Euclidean: ", r["euclidean"], f"({r['t_euclidean']:.4f}s)")
     print("Manhattan: ", r["manhattan"], f"({r['t_manhattan']:.4f}s)")
-    print(" <-------------------------------->")
 
 cursor.close()
 postgres_connection.close()
