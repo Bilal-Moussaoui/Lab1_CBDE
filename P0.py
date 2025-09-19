@@ -3,7 +3,7 @@ import psycopg2, time
 from psycopg2.extras import execute_values
 
 # Primer paso: Cargar el Bookcorpus elegido, es nuestro caso: PatrickHaller/wiki-and-book-corpus-10M de Hagging Face y seleccionar 10000 frases para trabajar.
-ds = load_dataset("PatrickHaller/wiki-and-book-corpus-10M")
+ds = load_dataset("PatrickHaller/wiki-and-book-corpus-10M", split="train[:10000]")
 
 # Segundo paso: Establecer conexión con el servidor Postgres hosteado en local (localhost) mediante psycopg2:
 postgres_connection = psycopg2.connect(
@@ -26,8 +26,7 @@ CREATE TABLE IF NOT EXISTS chunks_table (
 postgres_connection.commit()
 
 # Cuarto paso: Seleccionar los chunks y insertarlos en la tabla chunks_table.
-chunk_dictionary = ds["train"][:10000]   # Seleccionamos 10000 frases para trabajar
-chunks = [(string_chunk,) for string_chunk in chunk_dictionary["train"]]  # Seleccionar los strings (chunk) y convierte cada string en tupla de 1 elemento
+chunks = [(string_chunk,) for string_chunk in ds["train"]]  # Seleccionar los strings (chunk) y convierte cada string en tupla de 1 elemento
 
 t0 = time.perf_counter()
 execute_values(cursor,
