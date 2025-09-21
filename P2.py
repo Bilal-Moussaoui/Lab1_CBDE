@@ -54,31 +54,30 @@ for i, chunk_text in enumerate(tqdm(chunk_texts)):
         "manhattan": manhattan_neighbors,  "t_manhattan": t_manhattan
     })
 
-# # Primera forma de mostrar los resultados
-# for r in results:
-#     print(f"\nQuery {r['chunk_id']}: {r['chunk']}")
+# Primera forma de mostrar los resultados
+print("\n[P2] Resultados búsquedas de similitud en PostgreSQL")
+for i,r in enumerate(results):
+    print(f"\nQuery {i + 1}: (ID: {r['chunk_id']}) {r['chunk']}")
     
-#     print("  Euclidean:", r["euclidean"], f"({r['t_euclidean']:.4f}s)")
-#     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["euclidean"][0][0],))
-#     eucl_first_chunk = cursor.fetchone()[0]
-#     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["euclidean"][1][0],))
-#     eucl_second_chunk = cursor.fetchone()[0]
-#     print("    First neighbor:", eucl_first_chunk)
-#     print("    Second neighbor:", eucl_second_chunk)
+    print("  Euclidean:", r["euclidean"], f"({r['t_euclidean']:.5f}s)")
+    cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["euclidean"][0][0],))
+    eucl_first_chunk = cursor.fetchone()[0]
+    cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["euclidean"][1][0],))
+    eucl_second_chunk = cursor.fetchone()[0]
+    print("    First neighbor:", eucl_first_chunk)
+    print("    Second neighbor:", eucl_second_chunk)
 
-#     print("  Manhattan:", r["manhattan"], f"({r['t_manhattan']:.4f}s)")
-#     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["manhattan"][0][0],))
-#     manh_first_chunk = cursor.fetchone()[0]
-#     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["manhattan"][1][0],))
-#     manh_second_chunk = cursor.fetchone()[0]
-#     print("    First neighbor:", manh_first_chunk)
-#     print("    Second neighbor:", manh_second_chunk)
-
-# Segunda forma de mostrar los resultados
-for r in results:
-    print(f"\nQuery {r['chunk_id']}:")
-    print("Euclidean: ", r["euclidean"], f"({r['t_euclidean']:.4f}s)")
-    print("Manhattan: ", r["manhattan"], f"({r['t_manhattan']:.4f}s)")
+    print("  Manhattan:", r["manhattan"], f"({r['t_manhattan']:.5f}s)")
+    cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["manhattan"][0][0],))
+    manh_first_chunk = cursor.fetchone()[0]
+    cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["manhattan"][1][0],))
+    manh_second_chunk = cursor.fetchone()[0]
+    print("    First neighbor:", manh_first_chunk)
+    print("    Second neighbor:", manh_second_chunk)
 
 cursor.close()
 postgres_connection.close()
+
+# He fet una prova molt tonta per veure que funciona bé l'algorisme:
+# No excloure l'id del chunk que es rep com a paràmetre a la funció run_top2 y veure que sempre es la primera distnància, mentre que la segona es la que correspon
+# a la primera distancia del resultat de l'algorisme quan sí que s'exclou. 

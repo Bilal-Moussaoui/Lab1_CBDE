@@ -1,0 +1,107 @@
+[C0] Resultados inserción colección euclidean
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total: 2.879 s
+Lote - min: 0.2694 s
+Lote - max: 0.3052 s
+Lote - std: 0.0106 s
+Lote - media: 0.2879 s
+
+[C0] Resultados inserción colección cosine
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total: 3.088 s
+Lote - min: 0.2834 s
+Lote - max: 0.3691 s
+Lote - std: 0.0242 s
+Lote - media: 0.3088 s
+
+[C0] Resumen comparativo:
+Tiempo total euclidean: 2.879 s
+Tiempo total cosine: 3.088 s
+
+
+[C1] Resultados inserción de embeddings colección euclidean
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total inserción: 1.610 s
+Lote - min: 0.1181 s
+Lote - max: 0.2086 s
+Lote - std: 0.0269 s
+Lote - media: 0.1610 s
+
+[C1] Resultados inserción de embeddings colección cosine
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total inserción: 3.628 s
+Lote - min: 0.3091 s
+Lote - max: 0.4070 s
+Lote - std: 0.0280 s
+Lote - media: 0.3628 s
+
+[C1] Resumen comparativo inserción de embeddings:
+Tiempo total euclidean: 1.610 s
+Tiempo total cosine: 3.628 s
+
+
+[C2] Estadísticas de búsqueda colección euclidean
+Queries ejecutadas: 10
+Tiempo total: 0.079 s
+Query - min: 0.0006 s
+Query - max: 0.0732 s
+Query - std: 0.0218 s
+Query - media: 0.0079 s
+
+[C2] Estadísticas de búsqueda colección cosine
+Queries ejecutadas: 10
+Tiempo total: 0.048 s
+Query - min: 0.0006 s
+Query - max: 0.0413 s
+Query - std: 0.0122 s
+Query - media: 0.0048 s
+
+[C2] Resultados detallados búsquedas de similitud
+
+Query 1: (ID: ['11']) i tell them .
+  Euclidean: [('4950', 0.7706416845321655), ('5297', 0.8770196437835693)] (0.07324s)
+  Cosine:    [('4950', 0.3853207230567932), ('5297', 0.43850988149642944)] (0.04129s)
+
+Query 2: (ID: ['12']) his skin was the smooth creamy tan of immortals who go into the sun often in order to pass for human , and it made his eyes appear wondrously bright and beautiful .
+  Euclidean: [('5638', 0.6791203618049622), ('1055', 0.9572091698646545)] (0.00080s)
+  Cosine:    [('5638', 0.33956021070480347), ('1483', 0.4403747320175171)] (0.00104s)
+
+Query 3: (ID: ['13']) only her .
+  Euclidean: [('4756', 1.004118800163269), ('6130', 1.0520169734954834)] (0.00060s)
+  Cosine:    [('1453', 0.3743591904640198), ('4104', 0.40132588148117065)] (0.00079s)
+
+Query 4: (ID: ['14']) `` what are you looking for ? ''
+  Euclidean: [('9474', 0.6365979313850403), ('7305', 0.8103333115577698)] (0.00069s)
+  Cosine:    [('9474', 0.31829899549484253), ('1047', 0.34112948179244995)] (0.00070s)
+
+Query 5: (ID: ['15']) there were a few travelers eating their supper , but most were locals sitting for a drink .
+  Euclidean: [('4222', 1.0609471797943115), ('4906', 1.1037473678588867)] (0.00062s)
+  Cosine:    [('9825', 0.5268706679344177), ('4222', 0.5304735898971558)] (0.00072s)
+
+Query 6: (ID: ['16']) you have five minutes . ''
+  Euclidean: [('6327', 0.9401216506958008), ('7568', 1.0014901161193848)] (0.00056s)
+  Cosine:    [('8875', 0.4208434224128723), ('6327', 0.47006094455718994)] (0.00071s)
+
+Query 7: (ID: ['17']) is this where you live ?
+  Euclidean: [('9281', 1.2455360889434814), ('5414', 1.3005611896514893)] (0.00066s)
+  Cosine:    [('7183', 0.4205625653266907), ('4798', 0.44532549381256104)] (0.00080s)
+
+Query 8: (ID: ['18']) he stared at dog .
+  Euclidean: [('6074', 0.7494758367538452), ('2535', 0.8418235778808594)] (0.00056s)
+  Cosine:    [('6074', 0.37473803758621216), ('2535', 0.42091190814971924)] (0.00071s)
+
+Query 9: (ID: ['19']) the three strands of barbed wire on top of the six-foot-tall , chain link fence around the plant even pointed inward .
+  Euclidean: [('6764', 1.2562118768692017), ('3776', 1.2683898210525513)] (0.00056s)
+  Cosine:    [('8927', 0.5831614136695862), ('7705', 0.594237208366394)] (0.00075s)
+
+Query 10: (ID: ['20']) i was on my own after that . '
+  Euclidean: [('9827', 0.9404764771461487), ('2557', 1.0060721635818481)] (0.00064s)
+  Cosine:    [('9827', 0.47023820877075195), ('239', 0.49260449409484863)] (0.00065s)
+
+[C2] Resumen comparativo búsquedas:
+Tiempo total euclidean: 0.07894 s
+Tiempo total cosine: 0.04816 s

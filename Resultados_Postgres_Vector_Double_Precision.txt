@@ -1,0 +1,99 @@
+[P0] Resultados inserción en PostgreSQL
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total: 0.063 s
+Lote - min: 0.0041 s
+Lote - max: 0.0099 s
+Lote - std: 0.0017 s
+Lote - media: 0.0063 s
+
+[P1] Resultados inserción de los embeddings en PostgreSQL
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total inserción: 7.325 s
+Lote - min: 0.6815 s
+Lote - max: 0.8315 s
+Lote - std: 0.0490 s
+Lote - media: 0.7325 s
+
+
+[P2] Resultados búsquedas de similitud en PostgreSQL
+Query 11: i tell them .
+  Euclidean: [(4950, 0.8778620331399056), (5297, 0.9364931829073231)] (0.5093s)
+    First neighbor: you tell me . ''
+    Second neighbor: tell me , ' she said .
+  Manhattan: [(4950, 13.609252902159632), (5297, 14.320558488865373)] (0.3547s)
+    First neighbor: you tell me . ''
+    Second neighbor: tell me , ' she said .
+
+Query 12: his skin was the smooth creamy tan of immortals who go into the sun often in order to pass for human , and it made his eyes appear wondrously bright and beautiful .
+  Euclidean: [(5638, 0.8240876084691667), (1483, 0.9384824232097931)] (0.4860s)
+    First neighbor: his skin was so pale he looked luminous , his freckles standing out .
+    Second neighbor: he had the reflective eyes of an animal .
+  Manhattan: [(5638, 12.734615467472615), (1483, 14.539576404691458)] (0.3541s)
+    First neighbor: his skin was so pale he looked luminous , his freckles standing out .
+    Second neighbor: he had the reflective eyes of an animal .
+
+Query 13: only her .
+  Euclidean: [(1453, 0.8652850951496989), (4104, 0.8959081144317591)] (0.5009s)
+    First neighbor: not with her .
+    Second neighbor: for her .
+  Manhattan: [(1453, 13.215010929602068), (4104, 13.52674432815608)] (0.3571s)
+    First neighbor: not with her .
+    Second neighbor: for her .
+
+Query 14: `` what are you looking for ? ''
+  Euclidean: [(9474, 0.7978709372194391), (1047, 0.8259899010031719)] (0.5040s)
+    First neighbor: `` you want anything ? ''
+    Second neighbor: `` why are they searching for you ? ''
+  Manhattan: [(9474, 12.512913677064267), (1047, 12.772007101353474)] (0.3457s)
+    First neighbor: `` you want anything ? ''
+    Second neighbor: `` why are they searching for you ? ''
+
+Query 15: there were a few travelers eating their supper , but most were locals sitting for a drink .
+  Euclidean: [(9825, 1.0265189958980825), (4222, 1.030022901615183)] (0.4925s)
+    First neighbor: they all sat down .
+    Second neighbor: we were interrupted by the waiter who brought our drinks and took our order .
+  Manhattan: [(9825, 15.930426124556652), (4222, 16.01982006717807)] (0.3484s)
+    First neighbor: they all sat down .
+    Second neighbor: we were interrupted by the waiter who brought our drinks and took our order .
+
+Query 16: you have five minutes . ''
+  Euclidean: [(8875, 0.9174346525266177), (6327, 0.9695986045108669)] (0.5023s)
+    First neighbor: i could be there in fifteen minutes . ''
+    Second neighbor: i 'll see you later . ''
+  Manhattan: [(8875, 14.468038248602301), (6327, 15.203533722497692)] (0.3470s)
+    First neighbor: i could be there in fifteen minutes . ''
+    Second neighbor: i 'll see you later . ''
+
+Query 17: is this where you live ?
+  Euclidean: [(7183, 0.9171288118568258), (4798, 0.9437431869872348)] (0.4864s)
+    First neighbor: do you know where that is ?
+    Second neighbor: where are you ?
+  Manhattan: [(7183, 13.83934032761885), (4798, 14.712005574676487)] (0.3551s)
+    First neighbor: do you know where that is ?
+    Second neighbor: where are you ?
+
+Query 18: he stared at dog .
+  Euclidean: [(6074, 0.8657227418716299), (2535, 0.9175094425895282)] (0.5058s)
+    First neighbor: i stood there and stared at him .
+    Second neighbor: he looked at me .
+  Manhattan: [(6074, 13.568487225189507), (2535, 14.14204669926798)] (0.3670s)
+    First neighbor: i stood there and stared at him .
+    Second neighbor: he looked at me .
+
+Query 19: the three strands of barbed wire on top of the six-foot-tall , chain link fence around the plant even pointed inward .
+  Euclidean: [(8927, 1.079964523682348), (7705, 1.090171917819493)] (0.4926s)
+    First neighbor: the chain coiled around one of seth 's legs .
+    Second neighbor: the tangle of briars was n't quite so thick around this tree , so i was able to maneuver around the far side of the trunk past the row of thorns and circle around so that i was parallel with the two giants .
+  Manhattan: [(8927, 16.247609216067435), (6764, 17.087352132241445)] (0.3772s)
+    First neighbor: the chain coiled around one of seth 's legs .
+    Second neighbor: cara lifted her hand , pointing to the high privacy fence that surrounded her yard .
+
+Query 20: i was on my own after that . '
+  Euclidean: [(9827, 0.9697816706940166), (239, 0.9925771406988129)] (0.5079s)
+    First neighbor: `` you were set up .
+    Second neighbor: mine alone .
+  Manhattan: [(9827, 15.008134091628582), (8552, 15.272809000051655)] (0.3760s)
+    First neighbor: `` you were set up .
+    Second neighbor: and then i was never the same . ''

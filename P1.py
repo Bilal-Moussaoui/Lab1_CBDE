@@ -1,7 +1,8 @@
 from datasets import load_dataset
-import psycopg2, time
+import psycopg2, time, statistics
 from psycopg2.extras import execute_values
 from sentence_transformers import SentenceTransformer
+from tqdm import tqdm
 
 # Conexión con el servidor Postgres hosteado en local (localhost) mediante psycopg2:
 postgres_connection = psycopg2.connect(
@@ -48,25 +49,43 @@ embeddings_py = embeddings_np.tolist()
 embeddings_tuples = [(chunk_id, embedding) for chunk_id, embedding in zip(chunk_ids, embeddings_py)]
 
 
-# Insertar los embeddings en la tabla embeddings_table y medir el tiempo de ejecución.
+# Insertar los embeddings en la tabla embeddings_table por lotes para obtener métricas detalladas
 # On conflict do update es para actualizar el embedding si ya existe el id.
-start_time = time.time()
-execute_values(
-    cursor,
-    "INSERT INTO embeddings_table (id, embedding) VALUES %s "
-    "ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding",
-    embeddings_tuples,
-    page_size=1000
-)
-postgres_connection.commit()
-end_time = time.time()
-print(f"Insertados {len(embeddings_tuples)} embeddings en {end_time - start_time:.4f} segundos")
+batch_size = 1000
+times = []
+total = len(embeddings_tuples)
+
+for i in tqdm(range(0, total, batch_size)):
+    batch_embeddings = embeddings_tuples[i:i+batch_size]
+    
+    t0 = time.perf_counter()
+    execute_values(
+        cursor,
+        "INSERT INTO embeddings_table (id, embedding) VALUES %s "
+        "ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding",
+        batch_embeddings,
+        page_size=batch_size
+    )
+    postgres_connection.commit()
+    times.append(time.perf_counter() - t0)
+
+# Métricas de inserción de embeddings
+t_total = sum(times)
+t_min = min(times) if times else 0.0
+t_max = max(times) if times else 0.0
+t_avg = statistics.mean(times) if times else 0.0
+t_std = statistics.pstdev(times) if len(times) > 1 else 0.0
+
+print("\n[P1] Resultados inserción de los embeddings en PostgreSQL")
+print(f"Documentos: {total}")
+print(f"Nº de lotes: {len(times)} (tamaño de los lotes: {batch_size})")
+print(f"Tiempo total inserción: {t_total:.3f} s")
+print(f"Lote - min: {t_min:.4f} s")
+print(f"Lote - max: {t_max:.4f} s")
+print(f"Lote - std: {t_std:.4f} s")
+print(f"Lote - media: {t_avg:.4f} s")
 
 
 # Cerrar la conexión con la base de datos.
 cursor.close()
 postgres_connection.close()
-
-# He fet una prova molt tonta per veure que funciona bé l'algorisme:
-# No excloure l'id del chunk que es rep com a paràmetre a la funció run_top2 y veure que sempre es la primera distnància, mentre que la segona es la que correspon
-# a la primera distancia del resultat de l'algorisme quan sí que s'exclou. 
