@@ -1,0 +1,122 @@
+[G0] Resultados inserción de los chunks en PostgreSQL con pgvector
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total: 0.096 s
+Lote - min: 0.0074 s
+Lote - max: 0.0137 s
+Lote - std: 0.0018 s
+Lote - media: 0.0096 s
+
+
+[G1] Resultados actualización de los embeddings en PostgreSQL con pgvector
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total actualización: 6.693 s
+Lote - min: 0.6418 s
+Lote - max: 0.7221 s
+Lote - std: 0.0243 s
+Lote - media: 0.6693 s
+
+[G1] Creando índices IVFFlat para optimizar búsquedas...
+[G1] Índice IVFFlat euclidean creado
+[G1] Índice IVFFlat cosine creado
+[G1] Tiempo total creación de índices IVFFlat: 0.574 s
+
+
+[G2] Estadísticas búsquedas euclidean:
+  Queries: 10
+  Tiempo total: 0.024 s
+  Query - min: 0.0019 s
+  Query - max: 0.0040 s
+  Query - media: 0.0024 s
+  Query - std: 0.0006 s
+
+[G2] Estadísticas búsquedas cosine:
+  Queries: 10
+  Tiempo total: 0.022 s
+  Query - min: 0.0016 s
+  Query - max: 0.0026 s
+  Query - media: 0.0022 s
+  Query - std: 0.0003 s
+
+[G2] Resultados búsquedas de similitud en PostgreSQL con pgvector
+
+Query 1: (ID: 11) i tell them .
+  Euclidean: [(5850, 0.9785280512403357), (270, 1.0035224507457199)] (0.00396s)
+    First neighbor: maybe not tell them everything , but enough so that they know you 're in trouble .
+    Second neighbor: i told you that you would .
+  Cosine: [(3614, 0.5046696662902868), (3611, 0.5046696662902868)] (0.00255s)
+    First neighbor: he says .
+    Second neighbor: he says .
+
+Query 2: (ID: 12) his skin was the smooth creamy tan of immortals who go into the sun often in order to pass for human , and it made his eyes appear wondrously bright and beautiful .
+  Euclidean: [(2477, 0.9407574329107925), (6095, 0.9865214243407431)] (0.00228s)
+    First neighbor: the man with the glowing red eyes , whom he shared a dark history with .
+    Second neighbor: amazing how his whole persona changed with just a haircut , polish , and normal skin tone .
+  Cosine: [(5638, 0.6604397690558308), (1483, 0.5596253871917725)] (0.00244s)
+    First neighbor: his skin was so pale he looked luminous , his freckles standing out .
+    Second neighbor: he had the reflective eyes of an animal .
+
+Query 3: (ID: 13) only her .
+  Euclidean: [(1453, 0.8652850754050656), (4104, 0.8959081123250463)] (0.00248s)
+    First neighbor: not with her .
+    Second neighbor: for her .
+  Cosine: [(1453, 0.6256409287452698), (4104, 0.5986742973327637)] (0.00256s)
+    First neighbor: not with her .
+    Second neighbor: for her .
+
+Query 4: (ID: 14) `` what are you looking for ? ''
+  Euclidean: [(9474, 0.7978709485839987), (1047, 0.8259898677393832)] (0.00280s)
+    First neighbor: `` you want anything ? ''
+    Second neighbor: `` why are they searching for you ? ''
+  Cosine: [(9474, 0.6817009449005127), (1047, 0.6588702987277911)] (0.00240s)
+    First neighbor: `` you want anything ? ''
+    Second neighbor: `` why are they searching for you ? ''
+
+Query 5: (ID: 15) there were a few travelers eating their supper , but most were locals sitting for a drink .
+  Euclidean: [(9825, 1.0265189801750116), (7410, 1.0723859097634716)] (0.00256s)
+    First neighbor: they all sat down .
+    Second neighbor: `` cannibals .
+  Cosine: [(9825, 0.47312939167022705), (8569, 0.4223927007679529)] (0.00213s)
+    First neighbor: they all sat down .
+    Second neighbor: it was easy to drink fast .
+
+Query 6: (ID: 16) you have five minutes . ''
+  Euclidean: [(6327, 0.9695985523259494), (1015, 0.9917836005459506)] (0.00201s)
+    First neighbor: i 'll see you later . ''
+    Second neighbor: i 'll be back in a few minutes . ''
+  Cosine: [(1015, 0.5081826751341039), (3281, 0.47972038267376405)] (0.00240s)
+    First neighbor: i 'll be back in a few minutes . ''
+    Second neighbor: i 'm ready . ''
+
+Query 7: (ID: 17) is this where you live ?
+  Euclidean: [(7183, 0.9171288076724396), (9855, 1.1903134196130911)] (0.00216s)
+    First neighbor: do you know where that is ?
+    Second neighbor: its part of the pacific rim park as far as i know does that include the water ?
+  Cosine: [(4798, 0.5546743869781533), (9281, 0.377232052252767)] (0.00160s)
+    First neighbor: where are you ?
+    Second neighbor: us ?
+
+Query 8: (ID: 18) he stared at dog .
+  Euclidean: [(6074, 0.8657227250995813), (2535, 0.9175094429382509)] (0.00211s)
+    First neighbor: i stood there and stared at him .
+    Second neighbor: he looked at me .
+  Cosine: [(6074, 0.6252620406526939), (2535, 0.5790882110595703)] (0.00228s)
+    First neighbor: i stood there and stared at him .
+    Second neighbor: he looked at me .
+
+Query 9: (ID: 19) the three strands of barbed wire on top of the six-foot-tall , chain link fence around the plant even pointed inward .
+  Euclidean: [(8927, 1.0799645472818171), (7705, 1.0901719559638041)] (0.00187s)
+    First neighbor: the chain coiled around one of seth 's legs .
+    Second neighbor: the tangle of briars was n't quite so thick around this tree , so i was able to maneuver around the far side of the trunk past the row of thorns and circle around so that i was parallel with the two giants .
+  Cosine: [(7705, 0.40576261843666384), (2651, 0.39372029360649785)] (0.00207s)
+    First neighbor: the tangle of briars was n't quite so thick around this tree , so i was able to maneuver around the far side of the trunk past the row of thorns and circle around so that i was parallel with the two giants .
+    Second neighbor: it was the thick growth that wrapped around the columns , sprouting white limbs laden with a pulpy red fruit , hanging like japanese lamps .        
+
+Query 10: (ID: 20) i was on my own after that . '
+  Euclidean: [(9827, 0.9697816954092263), (239, 0.9925771533851717)] (0.00200s)
+    First neighbor: `` you were set up .
+    Second neighbor: mine alone .
+  Cosine: [(239, 0.5073953119696604), (341, 0.4988480955705634)] (0.00190s)
+    First neighbor: mine alone .
+    Second neighbor: i was almost for certain , at that moment , it was over for me .
