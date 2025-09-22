@@ -1,0 +1,117 @@
+[P0] Resultados inserción de los chunks en PostgreSQL
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total: 0.060 s
+Lote - min: 0.0040 s
+Lote - max: 0.0094 s
+Lote - std: 0.0015 s
+Lote - media: 0.0060 s
+
+
+[P1] Resultados inserción de los embeddings en PostgreSQL
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total inserción: 5.774 s
+Lote - min: 0.5600 s
+Lote - max: 0.5999 s
+Lote - std: 0.0145 s
+Lote - media: 0.5774 s
+
+
+[P2] Estadísticas Euclidean:
+Queries ejecutadas: 10
+Tiempo total: 4.496 s
+Query - min: 0.4437 s
+Query - max: 0.4722 s
+Query - media: 0.4496 s
+Query - std: 0.0084 s
+
+[P2] Estadísticas Manhattan:
+Queries ejecutadas: 10
+Tiempo total: 3.050 s
+Query - min: 0.3013 s
+Query - max: 0.3152 s
+Query - media: 0.3050 s
+Query - std: 0.0045 s
+
+[P2] Resultados búsquedas de similitud en PostgreSQL
+
+Query 1: what are you looking for ?
+  Euclidean: [(14, 0.8395718980316399), (4958, 1.0566277762548244)] (0.44483s)
+    First neighbor: `` what are you looking for ? ''
+    Second neighbor: what are you thinking ?
+  Manhattan: [(14, 12.806602247097818), (4958, 16.62636891006649)] (0.30179s)
+    First neighbor: `` what are you looking for ? ''
+    Second neighbor: what are you thinking ?
+
+Query 2: She opened the window to let the fresh air in.
+  Euclidean: [(3978, 0.9140337558758445), (9195, 0.9386985330462319)] (0.44510s)
+    First neighbor: her breath caught in her throat .
+    Second neighbor: the air she breathed was thinning , and she knew what that meant .
+  Manhattan: [(9195, 14.284377471217967), (3978, 14.29010653142996)] (0.30132s)
+    First neighbor: the air she breathed was thinning , and she knew what that meant .
+    Second neighbor: her breath caught in her throat .
+
+Query 3: Do you know the way to the station?
+  Euclidean: [(1481, 0.950825094260478), (2711, 1.0288219352201333)] (0.44884s)
+    First neighbor: you are the station manager after all . ''
+    Second neighbor: i enter the station alone , resigned to the fact that i 'll be cooking alone today , and as soon as that thought occurs to me , sarah walks in .
+  Manhattan: [(1481, 14.777741182859762), (2711, 16.03666984443713)] (0.30309s)
+    First neighbor: you are the station manager after all . ''
+    Second neighbor: i enter the station alone , resigned to the fact that i 'll be cooking alone today , and as soon as that thought occurs to me , sarah walks in .
+
+Query 4: He couldn’t believe how quiet the city was at night.
+  Euclidean: [(8969, 0.9563949303853849), (2062, 0.9610002525593297)] (0.44541s)
+    First neighbor: he did n't hear the sounds of the cars as they passed by on the main street .
+    Second neighbor: the night was too bright .
+  Manhattan: [(2062, 14.91179111185696), (8982, 15.049949910479114)] (0.30194s)
+    First neighbor: the night was too bright .
+    Second neighbor: then he grew silent .
+
+Query 5: Please pass me the salt.
+  Euclidean: [(6838, 1.0530932733152647), (8146, 1.0721492880941184)] (0.45654s)
+    First neighbor: give me a hand . '
+    Second neighbor: just leave me alone for a minute .
+  Manhattan: [(6838, 16.074487299735267), (7866, 16.594792599989596)] (0.30334s)
+    First neighbor: give me a hand . '
+    Second neighbor: give me orders .
+
+Query 6: The children were playing in the garden until sunset.
+  Euclidean: [(508, 1.0934872512167702), (6945, 1.1079930432208438)] (0.47217s)
+    First neighbor: they would break camp at sunrise and reach the city before the next sunset .
+    Second neighbor: after them came the children .
+  Manhattan: [(4645, 17.286547336818337), (9721, 17.291634777188783)] (0.30259s)
+    First neighbor: the hope in the childrens eyes dimmed and they went back to play , as always , following a daily ritual that they wanted no part of .
+    Second neighbor: outside , dusk would be falling .
+
+Query 7: He looked at the stars and wondered about the universe.
+  Euclidean: [(8421, 0.7970440400519392), (8474, 0.9325736714603526)] (0.44495s)
+    First neighbor: he looked up into the sky , struck suddenly by the brilliance of the stars above him .
+    Second neighbor: she thrust the useless compass into her pocket and looked up at the stars .
+  Manhattan: [(8421, 12.230572236900844), (8474, 14.29607523731658)] (0.30557s)
+    First neighbor: he looked up into the sky , struck suddenly by the brilliance of the stars above him .
+    Second neighbor: she thrust the useless compass into her pocket and looked up at the stars .
+
+Query 8: It started raining just as we reached the park.
+  Euclidean: [(7515, 0.9485795637631231), (6081, 1.0016777136692292)] (0.44449s)
+    First neighbor: a steady pounding rain .
+    Second neighbor: he went back to sleep but woke up again when the rain stopped .
+  Manhattan: [(7515, 14.84187295952718), (4830, 15.588406280542756)] (0.30335s)
+    First neighbor: a steady pounding rain .
+    Second neighbor: i splashed into the ocean .
+
+Query 9: Can you help me carry these boxes?
+  Euclidean: [(9124, 1.0096026459335874), (2184, 1.0997390438236188)] (0.44367s)
+    First neighbor: the kind of box that held jewellery .
+    Second neighbor: `` bring them ... here .
+  Manhattan: [(9124, 15.55420304025697), (2184, 16.92379865797323)] (0.31229s)
+    First neighbor: the kind of box that held jewellery .
+    Second neighbor: `` bring them ... here .
+
+Query 10: is this where you live ?
+  Euclidean: [(17, 8.815036020238371e-07), (7183, 0.9171288096916911)] (0.44957s)
+    First neighbor: is this where you live ?
+    Second neighbor: do you know where that is ?
+  Manhattan: [(17, 1.3584562116975007e-05), (7183, 13.839340296905213)] (0.31518s)
+    First neighbor: is this where you live ?
+    Second neighbor: do you know where that is ?

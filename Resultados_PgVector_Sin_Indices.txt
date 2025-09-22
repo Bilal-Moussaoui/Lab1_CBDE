@@ -1,0 +1,117 @@
+[G0] Resultados inserción de los chunks en PostgreSQL con pgvector
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total: 0.062 s
+Lote - min: 0.0044 s
+Lote - max: 0.0092 s
+Lote - std: 0.0015 s
+Lote - media: 0.0062 s
+
+
+[G1] Resultados inserción de embeddings en PostgreSQL con pgvector
+Documentos: 10000
+Nº de lotes: 10 (tamaño de los lotes: 1000)
+Tiempo total actualización: 5.635 s
+Lote - min: 0.5600 s
+Lote - max: 0.5750 s
+Lote - std: 0.0042 s
+Lote - media: 0.5635 s
+
+
+[G2] Estadísticas búsquedas euclidean:
+  Queries ejecutadas: 10
+  Tiempo total: 0.548 s
+  Query - min: 0.0306 s
+  Query - max: 0.1488 s
+  Query - media: 0.0548 s
+  Query - std: 0.0434 s
+
+[G2] Estadísticas búsquedas cosine:
+  Queries ejecutadas: 10
+  Tiempo total: 0.526 s
+  Query - min: 0.0297 s
+  Query - max: 0.1376 s
+  Query - media: 0.0526 s
+  Query - std: 0.0419 s
+
+[G2] Resultados búsquedas de similitud en PostgreSQL con pgvector
+
+Query 1: what are you looking for ?
+  Euclidean: [(14, 0.8395718866393056), (4958, 1.0566277635394468)] (0.14879s)
+    First neighbor: `` what are you looking for ? ''
+    Second neighbor: what are you thinking ?
+  Cosine: [(14, 0.6475595655966323), (4958, 0.44176885832733837)] (0.02986s)
+    First neighbor: `` what are you looking for ? ''
+    Second neighbor: what are you thinking ?
+
+Query 2: She opened the window to let the fresh air in.
+  Euclidean: [(3978, 0.914033775204288), (9195, 0.9386985428951305)] (0.03099s)
+    First neighbor: her breath caught in her throat .
+    Second neighbor: the air she breathed was thinning , and she knew what that meant .
+  Cosine: [(3978, 0.5822711488877399), (9195, 0.559422605106524)] (0.13756s)
+    First neighbor: her breath caught in her throat .
+    Second neighbor: the air she breathed was thinning , and she knew what that meant .
+
+Query 3: Do you know the way to the station?
+  Euclidean: [(1481, 0.9508250894838288), (2711, 1.028821918852067)] (0.03055s)
+    First neighbor: you are the station manager after all . ''
+    Second neighbor: i enter the station alone , resigned to the fact that i 'll be cooking alone today , and as soon as that thought occurs to me , sarah walks in .
+  Cosine: [(1481, 0.5479656947820513), (2711, 0.4707626858126335)] (0.13493s)
+    First neighbor: you are the station manager after all . ''
+    Second neighbor: i enter the station alone , resigned to the fact that i 'll be cooking alone today , and as soon as that thought occurs to me , sarah walks in .
+
+Query 4: He couldn’t believe how quiet the city was at night.
+  Euclidean: [(8969, 0.9563949649608054), (2062, 0.9610002698788775)] (0.03513s)
+    First neighbor: he did n't hear the sounds of the cars as they passed by on the main street .
+    Second neighbor: the night was too bright .
+  Cosine: [(8969, 0.5426543354988137), (2062, 0.538239288768705)] (0.03194s)
+    First neighbor: he did n't hear the sounds of the cars as they passed by on the main street .
+    Second neighbor: the night was too bright .
+
+Query 5: Please pass me the salt.
+  Euclidean: [(6838, 1.0530932775411648), (8146, 1.0721493294886213)] (0.03343s)
+    First neighbor: give me a hand . '
+    Second neighbor: just leave me alone for a minute .
+  Cosine: [(6838, 0.44549719502006746), (8146, 0.42524781377600585)] (0.02965s)
+    First neighbor: give me a hand . '
+    Second neighbor: just leave me alone for a minute .
+
+Query 6: The children were playing in the garden until sunset.
+  Euclidean: [(508, 1.0934872447884683), (6945, 1.1079930576664716)] (0.03728s)
+    First neighbor: they would break camp at sunrise and reach the city before the next sunset .
+    Second neighbor: after them came the children .
+  Cosine: [(508, 0.4021427990921871), (6945, 0.38617570359038433)] (0.03581s)
+    First neighbor: they would break camp at sunrise and reach the city before the next sunset .
+    Second neighbor: after them came the children .
+
+Query 7: He looked at the stars and wondered about the universe.
+  Euclidean: [(8421, 0.7970440255214167), (8474, 0.9325736629855178)] (0.03301s)
+    First neighbor: he looked up into the sky , struck suddenly by the brilliance of the stars above him .
+    Second neighbor: she thrust the useless compass into her pocket and looked up at the stars .
+  Cosine: [(8421, 0.6823604716980907), (8474, 0.5651532748432929)] (0.03245s)
+    First neighbor: he looked up into the sky , struck suddenly by the brilliance of the stars above him .
+    Second neighbor: she thrust the useless compass into her pocket and looked up at the stars .
+
+Query 8: It started raining just as we reached the park.
+  Euclidean: [(7515, 0.9485796122784758), (6081, 1.001677715084016)] (0.03367s)
+    First neighbor: a steady pounding rain .
+    Second neighbor: he went back to sleep but woke up again when the rain stopped .
+  Cosine: [(7515, 0.5500983595848083), (6081, 0.49832087755203247)] (0.03321s)
+    First neighbor: a steady pounding rain .
+    Second neighbor: he went back to sleep but woke up again when the rain stopped .
+
+Query 9: Can you help me carry these boxes?
+  Euclidean: [(9124, 1.0096026349921987), (2184, 1.0997390264096734)] (0.13376s)
+    First neighbor: the kind of box that held jewellery .
+    Second neighbor: `` bring them ... here .
+  Cosine: [(9124, 0.49035126028351517), (2184, 0.3952869412474008)] (0.03012s)
+    First neighbor: the kind of box that held jewellery .
+    Second neighbor: `` bring them ... here .
+
+Query 10: is this where you live ?
+  Euclidean: [(17, 8.815035816048049e-07), (7183, 0.9171288076724396)] (0.03114s)
+    First neighbor: is this where you live ?
+    Second neighbor: do you know where that is ?
+  Cosine: [(17, 1.0), (7183, 0.5794373405315087)] (0.03059s)
+    First neighbor: is this where you live ?
+    Second neighbor: do you know where that is ?
