@@ -20,7 +20,7 @@ postgres_connection = psycopg2.connect(
 cursor = postgres_connection.cursor()
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS chunks_table (
-  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   chunk TEXT NOT NULL
 );
 """)
