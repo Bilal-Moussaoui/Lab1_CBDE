@@ -65,7 +65,3 @@ cosine_time = update_embeddings_and_measure("cosine", collections["cosine"])
 print(f"\n[C1] Resumen comparativo inserción de embeddings:")
 print(f"Tiempo total euclidean: {euclidean_time:.3f} s")
 print(f"Tiempo total cosine: {cosine_time:.3f} s")
-
-
-# Observaciones:
-# - Falta ver porque calcular los embeddings es más rápido que hacer que Chroma los calcule.

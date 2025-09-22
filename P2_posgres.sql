@@ -47,8 +47,8 @@ END;
 $$;
 
 
--- Top-2 por Euclídea
-CREATE OR REPLACE FUNCTION top2_euclidean(query_embedding REAL[], query_id INT)
+-- Top-2 por Euclídea (sin query_id)
+CREATE OR REPLACE FUNCTION top2_euclidean(query_embedding REAL[])
 RETURNS TABLE(neighbor_id INT, distance DOUBLE PRECISION)
 LANGUAGE sql
 STABLE
@@ -56,13 +56,12 @@ AS $$
   SELECT e.id AS neighbor_id,
          l2_distance(query_embedding, e.embedding) AS distance
   FROM embeddings_table e
-  WHERE e.id <> query_id
   ORDER BY distance ASC
   LIMIT 2;
 $$;
 
--- Top-2 por Manhattan
-CREATE OR REPLACE FUNCTION top2_manhattan(query_embedding REAL[], query_id INT)
+-- Top-2 por Manhattan (sin query_id)
+CREATE OR REPLACE FUNCTION top2_manhattan(query_embedding REAL[])
 RETURNS TABLE(neighbor_id INT, distance DOUBLE PRECISION)
 LANGUAGE sql
 STABLE
@@ -70,7 +69,6 @@ AS $$
   SELECT e.id AS neighbor_id,
          l1_distance(query_embedding, e.embedding) AS distance
   FROM embeddings_table e
-  WHERE e.id <> query_id
   ORDER BY distance ASC
   LIMIT 2;
 $$;

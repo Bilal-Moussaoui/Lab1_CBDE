@@ -15,20 +15,19 @@ postgres_connection = psycopg2.connect(
     port="5432"
 )
 
-# Crear un cursor para interactuar con la base de datos y crear la tabla chunks_table con pgvector.
-# La tabla chunks_table almacenará los chunks de texto de las sentencias de nuestro corpus con vectores inicializados a 0.
+# Crear un cursor para interactuar con la base de datos y crear la tabla chunks_table_pgvector.
+# La tabla chunks_table_pgvector almacenará los chunks de texto (sin embeddings).
 cursor = postgres_connection.cursor()
 
-# Habilitar la extensión pgvector si no está habilitada
+# Habilitar la extensión pgvector si no está habilitada (se usará en G1 para la tabla de embeddings)
 cursor.execute("CREATE EXTENSION IF NOT EXISTS vector;")
 postgres_connection.commit()
 
-# Crear tabla con columna vectorial usando pgvector
+# Crear tabla de chunks
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS chunks_table_pgvector (
   id SERIAL PRIMARY KEY,
-  chunk TEXT NOT NULL,
-  embedding vector(384) DEFAULT array_fill(0.0, ARRAY[384])::vector
+  chunk TEXT NOT NULL
 );
 """)
 postgres_connection.commit()
@@ -72,9 +71,3 @@ print(f"Lote - media: {t_avg:.4f} s")
 # Cerrar la conexión con la base de datos.
 cursor.close()
 postgres_connection.close()
-
-
-# Observaciones:
-# - Los chunks de texto y los embeddings se almacenan en la misma tabla e inicializamos los vectores a 0.
-# - Debo ver si se crean los índices automáticamente o debo crearlos manualmente. Pensar también en posibles índices para la columna chunk.
-# - No hay que hacer JOINs entre tablas. Una sola tabla contiene los embeddings y los chunks de texto. Esto debería de suponer una mejor performance.

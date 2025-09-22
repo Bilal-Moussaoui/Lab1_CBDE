@@ -1,107 +1,153 @@
 [C0] Resultados inserción colección euclidean
 Documentos: 10000
 Nº de lotes: 10 (tamaño de los lotes: 1000)
-Tiempo total: 2.879 s
-Lote - min: 0.2694 s
-Lote - max: 0.3052 s
-Lote - std: 0.0106 s
-Lote - media: 0.2879 s
+Tiempo total: 2.828 s
+Lote - min: 0.2693 s
+Lote - max: 0.3044 s
+Lote - std: 0.0098 s
+Lote - media: 0.2828 s
 
 [C0] Resultados inserción colección cosine
 Documentos: 10000
 Nº de lotes: 10 (tamaño de los lotes: 1000)
-Tiempo total: 3.088 s
-Lote - min: 0.2834 s
-Lote - max: 0.3691 s
-Lote - std: 0.0242 s
-Lote - media: 0.3088 s
+Tiempo total: 3.087 s
+Lote - min: 0.2801 s
+Lote - max: 0.3653 s
+Lote - std: 0.0245 s
+Lote - media: 0.3087 s
 
 [C0] Resumen comparativo:
-Tiempo total euclidean: 2.879 s
-Tiempo total cosine: 3.088 s
+Tiempo total euclidean: 2.828 s
+Tiempo total cosine: 3.087 s
 
 
 [C1] Resultados inserción de embeddings colección euclidean
 Documentos: 10000
 Nº de lotes: 10 (tamaño de los lotes: 1000)
-Tiempo total inserción: 1.610 s
-Lote - min: 0.1181 s
-Lote - max: 0.2086 s
-Lote - std: 0.0269 s
-Lote - media: 0.1610 s
+Tiempo total inserción: 1.656 s
+Lote - min: 0.1412 s
+Lote - max: 0.2152 s
+Lote - std: 0.0213 s
+Lote - media: 0.1656 s
 
 [C1] Resultados inserción de embeddings colección cosine
 Documentos: 10000
 Nº de lotes: 10 (tamaño de los lotes: 1000)
-Tiempo total inserción: 3.628 s
-Lote - min: 0.3091 s
-Lote - max: 0.4070 s
-Lote - std: 0.0280 s
-Lote - media: 0.3628 s
+Tiempo total inserción: 2.303 s
+Lote - min: 0.2083 s
+Lote - max: 0.3006 s
+Lote - std: 0.0260 s
+Lote - media: 0.2303 s
 
 [C1] Resumen comparativo inserción de embeddings:
-Tiempo total euclidean: 1.610 s
-Tiempo total cosine: 3.628 s
+Tiempo total euclidean: 1.656 s
+Tiempo total cosine: 2.303 s
 
+
+[C2] Ejecutando búsquedas en colección euclidean...
+Búsquedas euclidean: 10it [00:00, 226.11it/s]
 
 [C2] Estadísticas de búsqueda colección euclidean
 Queries ejecutadas: 10
-Tiempo total: 0.079 s
-Query - min: 0.0006 s
-Query - max: 0.0732 s
-Query - std: 0.0218 s
-Query - media: 0.0079 s
+Tiempo total: 0.044 s
+Query - min: 0.0005 s
+Query - max: 0.0388 s
+Query - std: 0.0115 s
+Query - media: 0.0044 s
+
+[C2] Ejecutando búsquedas en colección cosine...
+Búsquedas cosine: 10it [00:00, 264.61it/s]
 
 [C2] Estadísticas de búsqueda colección cosine
 Queries ejecutadas: 10
-Tiempo total: 0.048 s
-Query - min: 0.0006 s
-Query - max: 0.0413 s
-Query - std: 0.0122 s
-Query - media: 0.0048 s
+Tiempo total: 0.038 s
+Query - min: 0.0007 s
+Query - max: 0.0302 s
+Query - std: 0.0088 s
+Query - media: 0.0038 s
 
 [C2] Resultados detallados búsquedas de similitud
 
-Query 1: (ID: ['11']) i tell them .
-  Euclidean: [('4950', 0.7706416845321655), ('5297', 0.8770196437835693)] (0.07324s)
-  Cosine:    [('4950', 0.3853207230567932), ('5297', 0.43850988149642944)] (0.04129s)
+Query 1: what are you looking for ?
+  Euclidean: [('6354', 1.3137965202331543), ('574', 1.4767608642578125)] (0.03884s)
+First neighbor: i was n't interested .
+Second neighbor: `` ready ? ''
+  Cosine:    [('14', 0.3524402976036072), ('4958', 0.5582310557365417)] (0.03018s)
+First neighbor: `` what are you looking for ? ''
+Second neighbor: what are you thinking ?
 
-Query 2: (ID: ['12']) his skin was the smooth creamy tan of immortals who go into the sun often in order to pass for human , and it made his eyes appear wondrously bright and beautiful .
-  Euclidean: [('5638', 0.6791203618049622), ('1055', 0.9572091698646545)] (0.00080s)
-  Cosine:    [('5638', 0.33956021070480347), ('1483', 0.4403747320175171)] (0.00104s)
+Query 2: She opened the window to let the fresh air in.
+  Euclidean: [('1682', 0.9035531282424927), ('9777', 0.9359339475631714)] (0.00078s)
+First neighbor: she cleared her throat .
+Second neighbor: with her head lowered , the room came into focus again .
+  Cosine:    [('3978', 0.41772913932800293), ('9195', 0.4405776262283325)] (0.00092s)
+First neighbor: her breath caught in her throat .
+Second neighbor: the air she breathed was thinning , and she knew what that meant .
 
-Query 3: (ID: ['13']) only her .
-  Euclidean: [('4756', 1.004118800163269), ('6130', 1.0520169734954834)] (0.00060s)
-  Cosine:    [('1453', 0.3743591904640198), ('4104', 0.40132588148117065)] (0.00079s)
+Query 3: Do you know the way to the station?
+  Euclidean: [('9892', 1.2813142538070679), ('520', 1.3494246006011963)] (0.00060s)
+First neighbor: `` have him take it from the portable board you left up there on the catwalk railing .
+Second neighbor: there are 8,363 units in their immediate area and i have an additional 6,423 units moving towards the area . ''
+  Cosine:    [('1481', 0.45203423500061035), ('2711', 0.5292373895645142)] (0.00088s)
+First neighbor: you are the station manager after all . ''
+Second neighbor: i enter the station alone , resigned to the fact that i 'll be cooking alone today , and as soon as that thought occurs to me , sarah walks in .
 
-Query 4: (ID: ['14']) `` what are you looking for ? ''
-  Euclidean: [('9474', 0.6365979313850403), ('7305', 0.8103333115577698)] (0.00069s)
-  Cosine:    [('9474', 0.31829899549484253), ('1047', 0.34112948179244995)] (0.00070s)
+Query 4: He couldn’t believe how quiet the city was at night.
+  Euclidean: [('4369', 0.9747415781021118), ('8499', 1.1488745212554932)] (0.00065s)
+First neighbor: silence echoed horribly loud .
+Second neighbor: night was coming .
+  Cosine:    [('8969', 0.4573456048965454), ('2062', 0.46176081895828247)] (0.00077s)
+First neighbor: he did n't hear the sounds of the cars as they passed by on the main street .
+Second neighbor: the night was too bright .
 
-Query 5: (ID: ['15']) there were a few travelers eating their supper , but most were locals sitting for a drink .
-  Euclidean: [('4222', 1.0609471797943115), ('4906', 1.1037473678588867)] (0.00062s)
-  Cosine:    [('9825', 0.5268706679344177), ('4222', 0.5304735898971558)] (0.00072s)
+Query 5: Please pass me the salt.
+  Euclidean: [('8067', 1.277140736579895), ('1290', 1.3498036861419678)] (0.00061s)
+First neighbor: i shake my head .
+Second neighbor: i shook my head .
+  Cosine:    [('6838', 0.5545026063919067), ('8146', 0.5747519731521606)] (0.00077s)
+First neighbor: give me a hand . '
+Second neighbor: just leave me alone for a minute .
 
-Query 6: (ID: ['16']) you have five minutes . ''
-  Euclidean: [('6327', 0.9401216506958008), ('7568', 1.0014901161193848)] (0.00056s)
-  Cosine:    [('8875', 0.4208434224128723), ('6327', 0.47006094455718994)] (0.00071s)
+Query 6: The children were playing in the garden until sunset.
+  Euclidean: [('1391', 1.4224432706832886), ('9913', 1.5281689167022705)] (0.00047s)
+First neighbor: when they awoke it was early morning .
+Second neighbor: dawn was less than two hours off .
+  Cosine:    [('508', 0.5978572964668274), ('6945', 0.6138243675231934)] (0.00086s)
+First neighbor: they would break camp at sunrise and reach the city before the next sunset .
+Second neighbor: after them came the children .
 
-Query 7: (ID: ['17']) is this where you live ?
-  Euclidean: [('9281', 1.2455360889434814), ('5414', 1.3005611896514893)] (0.00066s)
-  Cosine:    [('7183', 0.4205625653266907), ('4798', 0.44532549381256104)] (0.00080s)
+Query 7: He looked at the stars and wondered about the universe.
+  Euclidean: [('1090', 0.9117793440818787), ('1483', 1.090059518814087)] (0.00057s)
+First neighbor: as he gazed at it , something triggered within his mind .
+Second neighbor: he had the reflective eyes of an animal .
+  Cosine:    [('8421', 0.31763947010040283), ('8474', 0.43484675884246826)] (0.00089s)
+First neighbor: he looked up into the sky , struck suddenly by the brilliance of the stars above him .
+Second neighbor: she thrust the useless compass into her pocket and looked up at the stars .
 
-Query 8: (ID: ['18']) he stared at dog .
-  Euclidean: [('6074', 0.7494758367538452), ('2535', 0.8418235778808594)] (0.00056s)
-  Cosine:    [('6074', 0.37473803758621216), ('2535', 0.42091190814971924)] (0.00071s)
+Query 8: It started raining just as we reached the park.
+  Euclidean: [('8115', 1.2851274013519287), ('3025', 1.2866841554641724)] (0.00048s)
+First neighbor: back into our room we went .
+Second neighbor: we slept for a long time .
+  Cosine:    [('7515', 0.449901819229126), ('6081', 0.5016793012619019)] (0.00097s)
+First neighbor: a steady pounding rain .
+Second neighbor: he went back to sleep but woke up again when the rain stopped .
 
-Query 9: (ID: ['19']) the three strands of barbed wire on top of the six-foot-tall , chain link fence around the plant even pointed inward .
-  Euclidean: [('6764', 1.2562118768692017), ('3776', 1.2683898210525513)] (0.00056s)
-  Cosine:    [('8927', 0.5831614136695862), ('7705', 0.594237208366394)] (0.00075s)
+Query 9: Can you help me carry these boxes?
+  Euclidean: [('9026', 1.6122651100158691), ('5539', 1.6206315755844116)] (0.00050s)
+First neighbor: `` are you ready for me ? ''
+Second neighbor: theyre ready .
+  Cosine:    [('9124', 0.5096486806869507), ('2184', 0.6047130823135376)] (0.00081s)
+First neighbor: the kind of box that held jewellery .
+Second neighbor: `` bring them ... here .
 
-Query 10: (ID: ['20']) i was on my own after that . '
-  Euclidean: [('9827', 0.9404764771461487), ('2557', 1.0060721635818481)] (0.00064s)
-  Cosine:    [('9827', 0.47023820877075195), ('239', 0.49260449409484863)] (0.00065s)
+Query 10: is this where you live ?
+  Euclidean: [('9949', 1.3538480997085571), ('9537', 1.4814307689666748)] (0.00063s)
+First neighbor: this is still america , and you are on private property .
+Second neighbor: yes .
+  Cosine:    [('17', -4.76837158203125e-07), ('7183', 0.42056262493133545)] (0.00066s)
+First neighbor: is this where you live ?
+Second neighbor: do you know where that is ?
 
 [C2] Resumen comparativo búsquedas:
-Tiempo total euclidean: 0.07894 s
-Tiempo total cosine: 0.04816 s
+Tiempo total euclidean: 0.04414 s
+Tiempo total cosine: 0.03771 s

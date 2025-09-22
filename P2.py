@@ -1,4 +1,4 @@
-import time, psycopg2
+import time, psycopg2, statistics
 from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
 
@@ -14,50 +14,71 @@ cursor = postgres_connection.cursor()
 # Inicializar el modelo de embeddings
 model = SentenceTransformer('all-MiniLM-L6-v2')
 
-# Textos de chunks para generar embeddings
-# NOTA: Los IDs se obtienen dinámicamente desde la base de datos (línea 44)
-chunk_texts = [
-    "i tell them .",
-    "his skin was the smooth creamy tan of immortals who go into the sun often in order to pass for human , and it made his eyes appear wondrously bright and beautiful .",
-    "only her .",
-    "`` what are you looking for ? ''",
-    "there were a few travelers eating their supper , but most were locals sitting for a drink .",
-    "you have five minutes . ''",
-    "is this where you live ?",
-    "he stared at dog .",
-    "the three strands of barbed wire on top of the six-foot-tall , chain link fence around the plant even pointed inward .",
-    "i was on my own after that . '"
+# Textos de consulta arbitrarios
+query_texts = [
+    "what are you looking for ?",
+    "She opened the window to let the fresh air in.",
+    "Do you know the way to the station?",
+    "He couldn’t believe how quiet the city was at night.",
+    "Please pass me the salt.",
+    "The children were playing in the garden until sunset.",
+    "He looked at the stars and wondered about the universe.",
+    "It started raining just as we reached the park.",
+    "Can you help me carry these boxes?",
+    "is this where you live ?"
 ]
 
-def run_top2(metric_func, query_embedding, query_id):
+def run_top2(metric_func, query_embedding):
     t0 = time.perf_counter()
-    cursor.execute(f"SELECT neighbor_id, distance FROM {metric_func}(%s, %s);", (query_embedding, query_id))
+    cursor.execute(f"SELECT neighbor_id, distance FROM {metric_func}(%s);", (query_embedding,))
     neighbors = cursor.fetchall()  # [(neighbor_id, distance), (neighbor_id, distance)]
     dt = time.perf_counter() - t0
     return neighbors, dt
 
-results = []
 
-for i, chunk_text in enumerate(tqdm(chunk_texts)):
-    # Generar embedding del texto del chunk
-    cursor.execute("SELECT id FROM chunks_table WHERE chunk = %s;", (chunk_text,))
-    query_id = str(cursor.fetchone()[0])
-    query_embedding = model.encode(chunk_text).tolist()
-    
-    euclidean_neighbors, t_euclidean = run_top2('top2_euclidean', query_embedding, query_id)
-    manhattan_neighbors, t_manhattan = run_top2('top2_manhattan', query_embedding, query_id)
+# Estadísticas agregadas de tiempos
+def print_stats(times, name):
+    if not times:
+        return
+    t_total = sum(times)
+    t_min = min(times)
+    t_max = max(times)
+    t_avg = statistics.mean(times)
+    t_std = statistics.pstdev(times) if len(times) > 1 else 0.0
+    print(f"\n[P2] Estadísticas {name}:")
+    print(f"Queries ejecutadas: {len(times)}")
+    print(f"Tiempo total: {t_total:.3f} s")
+    print(f"Query - min: {t_min:.4f} s")
+    print(f"Query - max: {t_max:.4f} s")
+    print(f"Query - media: {t_avg:.4f} s")
+    print(f"Query - std: {t_std:.4f} s")
+
+
+results = []
+euclidean_times = []
+manhattan_times = []
+
+for i, query_text in enumerate(tqdm(query_texts)):
+    # Generar embedding del texto de consulta (no requiere existir en la BD)
+    query_embedding = model.encode(query_text).tolist()
+
+    euclidean_neighbors, t_euclidean = run_top2('top2_euclidean', query_embedding)
+    manhattan_neighbors, t_manhattan = run_top2('top2_manhattan', query_embedding)
 
     results.append({
-        "chunk_id": query_id,
-        "chunk": chunk_text,
+        "query": query_text,
         "euclidean": euclidean_neighbors,  "t_euclidean": t_euclidean,
         "manhattan": manhattan_neighbors,  "t_manhattan": t_manhattan
     })
+    euclidean_times.append(t_euclidean)
+    manhattan_times.append(t_manhattan)
 
-# Primera forma de mostrar los resultados
+print_stats(euclidean_times, "Euclidean")
+print_stats(manhattan_times, "Manhattan")
+
 print("\n[P2] Resultados búsquedas de similitud en PostgreSQL")
 for i,r in enumerate(results):
-    print(f"\nQuery {i + 1}: (ID: {r['chunk_id']}) {r['chunk']}")
+    print(f"\nQuery {i + 1}: {r['query']}")
     
     print("  Euclidean:", r["euclidean"], f"({r['t_euclidean']:.5f}s)")
     cursor.execute("SELECT chunk FROM chunks_table WHERE id = %s;", (r["euclidean"][0][0],))
@@ -77,7 +98,3 @@ for i,r in enumerate(results):
 
 cursor.close()
 postgres_connection.close()
-
-# He fet una prova molt tonta per veure que funciona bé l'algorisme:
-# No excloure l'id del chunk que es rep com a paràmetre a la funció run_top2 y veure que sempre es la primera distnància, mentre que la segona es la que correspon
-# a la primera distancia del resultat de l'algorisme quan sí que s'exclou. 
